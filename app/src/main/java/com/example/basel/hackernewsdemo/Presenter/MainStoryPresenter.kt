@@ -10,6 +10,7 @@ class MainStoryPresenter (storyView : StoryView?): StoryPresenter {
     internal var mView =storyView
     internal lateinit var model: MainStoryModel
     internal lateinit var Topstories : ArrayList<Story>
+
     fun intiPresenter()
     {
         model= MainStoryModel()

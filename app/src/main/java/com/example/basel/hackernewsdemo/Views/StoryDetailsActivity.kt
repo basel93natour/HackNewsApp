@@ -61,14 +61,12 @@ class StoryDetailsActivity : AppCompatActivity(), DetailsView {
         articleFragment.setArguments(articleBundle )
 
         val commentsFragment= CommentsFragment()
-        // pass arguments to fragment
         val commentsBundle = Bundle()
+        //check if there is comments
         if (!storyDetails.kids.orEmpty().isEmpty()) {
             commentsBundle.putIntegerArrayList("Kids", ArrayList(storyDetails.kids))
+            commentsFragment.setArguments(commentsBundle)
         }
-        commentsFragment.setArguments(commentsBundle)
-
-        val adapter = ViewPagerAdapter(supportFragmentManager)
         detailsAdapter.addFragment(articleFragment, "Article")
         detailsAdapter.addFragment(commentsFragment, "Comments")
         viewPager.adapter = detailsAdapter

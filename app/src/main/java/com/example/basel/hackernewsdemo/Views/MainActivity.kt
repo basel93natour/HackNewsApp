@@ -37,12 +37,10 @@ class MainActivity : AppCompatActivity(), StoryView {
         preseneter.getTopStories()
     }
     override fun showLoading() {
-        //show progress bar
-        progressBar.visibility=android.view.View.VISIBLE
+         progressBar.visibility=android.view.View.VISIBLE
 
     }
     override fun hideLoading() {
-       //hide progress bar
        progressBar.visibility=android.view.View.INVISIBLE
     }
 
@@ -51,6 +49,7 @@ class MainActivity : AppCompatActivity(), StoryView {
         val adapter = StoryListAdapter(this, stories,object : StoryListAdapter.onItemClickListener{
             override fun onItemClick(story: Story) {
                 val intent = Intent(mContext, StoryDetailsActivity::class.java)
+                //send story object to StoryDetailsActivity
                 intent.putExtra("Story", story)
                 startActivity(intent)
             }

@@ -36,12 +36,15 @@ class ArticleFragment (): Fragment(),ArticleView
     }
     override fun showArticle(url: String) {
         ShowLoading()
+        //allow JavaScript in the loaded page
         article_page.getSettings().setJavaScriptEnabled(true)
         article_page.getSettings().setPluginState(PluginState.ON)
         article_page.getSettings().setAllowFileAccess(true)
 
+        //load webpage
         article_page.loadUrl(url)
 
+        //hide prgoress bar after completion
         article_page.setWebViewClient(object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 return false

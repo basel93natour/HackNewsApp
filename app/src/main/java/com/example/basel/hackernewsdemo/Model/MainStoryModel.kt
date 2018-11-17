@@ -24,6 +24,9 @@ class MainStoryModel : StoryModel {
         storyService=NetworkClient().getRetrofitInstance().create(HNService::class.java)
     }
     override fun getTopStories() : Single<List<Story>> {
+        //send request to get all top stories ids
+        //after that we will take each id by itself and convert it to observable object to get the full details of the story
+        //put 25 items on the list and return it to presenter
         return storyService.getTopStories
                 .flatMap<Int> { itemsList-> Flowable.fromIterable(itemsList) }
                 .flatMap <Story> { itemId ->  storyService.getStory(itemId)}
@@ -35,7 +38,6 @@ class MainStoryModel : StoryModel {
     }
 
     override fun getComments(kids : ArrayList<Int>) : Single<List<Comment>> {
-
 
         return   Flowable
                 .just<List<Int>>(kids)//emits the list
