@@ -1,6 +1,7 @@
 package com.example.basel.hackernewsdemo.NetworkService
 
 
+import com.example.basel.hackernewsdemo.DataModel.Comment
 import com.example.basel.hackernewsdemo.DataModel.Story
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -16,4 +17,8 @@ interface HNService {
 
     @GET("item/{item_number}.json")
     fun getStory(@Path("item_number") item: Int): Flowable<Story>
+
+    @GET("item/{item_number}.json")
+    fun getComments(@Path("item_number") item: Int): Flowable<Comment>
+
 }

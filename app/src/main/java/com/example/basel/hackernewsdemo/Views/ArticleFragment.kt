@@ -38,7 +38,7 @@ class ArticleFragment (): Fragment(),ArticleView
         article_page=rootView.findViewById(R.id.article_page)
         progressBar=rootView.findViewById(R.id.progressBar)
 
-        showArticle(story_url)
+        //showArticle(story_url)
     }
     override fun showArticle(url: String) {
         ShowLoading()

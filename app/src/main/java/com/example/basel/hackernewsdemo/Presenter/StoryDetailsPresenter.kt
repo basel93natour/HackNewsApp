@@ -15,10 +15,7 @@ class StoryDetailsPresenter (view : DetailsView?):DetailsPresenter
         mView!!.intiView()
 
     }
+    override fun showComments(kids: ArrayList<Int>) {
 
-    override fun showStoryArticle(url: String) {
-    }
-
-    override fun showComments() {
     }
 }

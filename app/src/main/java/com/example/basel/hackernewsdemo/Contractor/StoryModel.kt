@@ -1,13 +1,12 @@
 package com.example.basel.hackernewsdemo.Contractor
 
+import com.example.basel.hackernewsdemo.DataModel.Comment
 import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.NetworkService.onFinishedListener
 import io.reactivex.Single
 
 interface StoryModel
 {
-    fun getStories()
     fun getTopStories() : Single<List<Story>>
-    fun getStory(itemId : Int)
-    fun getComments()
+    fun getComments(kids : ArrayList<Int>) : Single<List<Comment>>
 }

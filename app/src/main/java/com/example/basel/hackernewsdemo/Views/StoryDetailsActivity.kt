@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.widget.TextView
 import com.example.basel.hackernewsdemo.Adapter.StoryDetailsAdapter
 import com.example.basel.hackernewsdemo.Contractor.DetailsView
 import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.Presenter.StoryDetailsPresenter
 import com.example.basel.hackernewsdemo.R
+import org.w3c.dom.Comment
 
 class StoryDetailsActivity : AppCompatActivity(), DetailsView {
 
@@ -55,13 +57,19 @@ class StoryDetailsActivity : AppCompatActivity(), DetailsView {
 
         val articleFragment= ArticleFragment()
         // pass arguments to fragment
-        val bundle = Bundle()
-        bundle.putString("url", storyDetails.url!!)
-        articleFragment.setArguments(bundle)
+        val articleBundle = Bundle()
+        articleBundle .putString("url", storyDetails.url!!)
+        articleFragment.setArguments(articleBundle )
+
+        val commentsFragment= CommentsFragment()
+        // pass arguments to fragment
+        val commentsBundle = Bundle()
+        commentsBundle.putIntegerArrayList("Kids", ArrayList(storyDetails.kids))
+        commentsFragment.setArguments(commentsBundle)
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
         detailsAdapter.addFragment(articleFragment, "Article")
-        detailsAdapter.addFragment(CommentsFragment(), "Comments")
+        detailsAdapter.addFragment(commentsFragment, "Comments")
         viewPager.adapter = detailsAdapter
         tabs.setupWithViewPager(viewPager)
     }
