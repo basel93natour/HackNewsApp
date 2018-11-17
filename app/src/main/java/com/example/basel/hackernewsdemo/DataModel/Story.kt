@@ -1,8 +1,11 @@
 package com.example.basel.hackernewsdemo.DataModel
+import java.io.Serializable;
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-class Story : Comparable <Story>{
+
+@SuppressWarnings("serial") //With this annotation we are going to hide compiler warnings
+class Story() : Comparable <Story>,Serializable {
     @SerializedName("by")
     @Expose
     var by:String?=null
@@ -34,4 +37,5 @@ class Story : Comparable <Story>{
     override fun compareTo(story: Story): Int {
         return story.id!!.compareTo(this.id!!)
     }
+
 }

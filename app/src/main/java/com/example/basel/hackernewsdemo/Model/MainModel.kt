@@ -1,6 +1,7 @@
 package com.example.basel.hackernewsdemo.Model
 
 import android.util.Log
+import android.widget.Toast
 import com.example.basel.hackernewsdemo.Contractor.Model
 import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.NetworkService.onFinishedListener
@@ -11,6 +12,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
+import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
 class MainModel : Model {
@@ -18,52 +24,27 @@ class MainModel : Model {
 
     internal  lateinit var storyService : HNService
     final internal var id=0
+    companion object {
+        internal lateinit var topStoriesList: ArrayList<Story>
+    }
     init {
         storyService=NetworkClient().getRetrofitInstance().create(HNService::class.java)
     }
     override fun getStories() {
     }
-    override fun getTopStories(onFinishedListener: onFinishedListener)  {
+    override fun getTopStories() : Single<List<Story>> {
+        storyService.getTopStories
 
-        var topStoriesCall =storyService.getTopStories()
-
-        topStoriesCall.enqueue(object :Callback<List<Int>>
-        {
-            override fun onResponse(call: Call<List<Int>>, response: Response<List<Int>>) {
-                var stories=ArrayList<Story>()
-                for (storyid in response.body()!!)
-                {
-                    var story=Story()
-                    story.id=storyid
-                    stories.add(story)
-                }
-                //sort the Ids to get the latest
-                Collections.sort(stories)
-                //get the first 25 element only
-                var topStories=stories.subList(0,24)
-
-                for (story in topStories)
-                {
-                 var getStory=  storyService.getStory(story.id!!)
-                    getStory.enqueue(object : Callback<Story>
-                    {
-                        override fun onFailure(call: Call<Story>, t: Throwable) {
-                        }
-                        override fun onResponse(call: Call<Story>, response: Response<Story>) {
-                            onFinishedListener.onSuccess(response.body()!!)
-                        }
-                    })
-                }
-            }
-
-            override fun onFailure(call: Call<List<Int>>, t: Throwable) {
-                onFinishedListener.onFailed("FAILED"+t.message!!)
-            }
-        })
+        return storyService.getTopStories
+                .flatMap<Int> { itemsList-> Flowable.fromIterable(itemsList) }
+                .flatMap <Story> { itemId ->  storyService.getStory(itemId)}
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .take(25)
+                .toList()
 
     }
-
-    override fun getStory() {
+    override fun getStory(itemId : Int) {
     }
     override fun getComments() {
     }

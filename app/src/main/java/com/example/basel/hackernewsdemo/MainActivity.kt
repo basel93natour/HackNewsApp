@@ -1,64 +1,69 @@
 package com.example.basel.hackernewsdemo
 
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.recyclerview.R.attr.layoutManager
-import android.widget.Button
-import android.widget.TextView
 import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.Contractor.View
 import com.example.basel.hackernewsdemo.MainPresenter.MainPresenter
-
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-
-import android.support.v7.widget.DividerItemDecoration
-import android.widget.LinearLayout.HORIZONTAL
+import android.widget.*
 import com.example.basel.hackernewsdemo.Adapter.SimpleDividerItemDecoration
 import com.example.basel.hackernewsdemo.Adapter.StoryListAdapter
 
-
 class MainActivity : AppCompatActivity(), View {
 
-
     lateinit var preseneter : MainPresenter
-    internal lateinit var txt : TextView
-    internal lateinit var btn: Button
     internal lateinit var recyclerView: RecyclerView
-    var adapter: StoryListAdapter? = null
+    internal lateinit var mContext : Context
+    internal lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        preseneter= MainPresenter(this)
+        preseneter = MainPresenter(this)
         preseneter.intiPresenter()
-
     }
 
     override fun intiView() {
+        mContext=this
         recyclerView = findViewById<RecyclerView>(R.id.stories_list)
+        progressBar=findViewById(R.id.progressBar)
         recyclerView.setLayoutManager(LinearLayoutManager(this))
-        var stories=ArrayList<Story>()
-        adapter = StoryListAdapter(this, stories)
+        showLoading()
         preseneter.getTopStories()
-        recyclerView.addItemDecoration(SimpleDividerItemDecoration(
-                getApplicationContext()
-        ));
-        recyclerView.setAdapter(adapter)
-
     }
     override fun showLoading() {
+        //show progress bar
+        progressBar.visibility=android.view.View.VISIBLE
+
     }
     override fun hideLoading() {
+       //hide progress bar
+       progressBar.visibility=android.view.View.INVISIBLE
     }
 
     override fun showTopStories(stories: ArrayList<Story>) {
-        // set up the RecyclerView
-
+        // set up the RecyclerView and onItemclick listener
+        val adapter = StoryListAdapter(this, stories,object : StoryListAdapter.onItemClickListener{
+            override fun onItemClick(story: Story) {
+                val intent = Intent(mContext, StoryDetailsActivity::class.java)
+                intent.putExtra("Story", story)
+                startActivity(intent)
+            }
+        })
+        //add divider between list items
+        recyclerView.addItemDecoration(SimpleDividerItemDecoration(
+                getApplicationContext()
+        ));
+        //assign the adapter to the recyclerView
+        recyclerView.setAdapter(adapter)
         }
 
-    override fun getTopStory(storyID : Int) {
-        txt.setText("ID:"+storyID)
+    override fun goToStory(story: Story) {
+
     }
 
     override fun onDestroy() {

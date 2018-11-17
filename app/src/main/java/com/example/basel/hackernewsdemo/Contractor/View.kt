@@ -8,6 +8,6 @@ interface View
     fun showLoading()
     fun hideLoading()
     fun showTopStories(stories : ArrayList<Story>)
-    fun getTopStory(storyID : Int)
+    fun goToStory(story: Story)
 
 }
