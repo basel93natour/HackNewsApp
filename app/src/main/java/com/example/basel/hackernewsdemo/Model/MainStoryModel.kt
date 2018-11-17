@@ -1,6 +1,5 @@
 package com.example.basel.hackernewsdemo.Model
 
-import android.util.Log
 import com.example.basel.hackernewsdemo.Contractor.StoryModel
 import com.example.basel.hackernewsdemo.DataModel.Comment
 import com.example.basel.hackernewsdemo.DataModel.Story
@@ -8,11 +7,9 @@ import com.example.basel.hackernewsdemo.NetworkService.HNService
 import com.example.basel.hackernewsdemo.NetworkService.NetworkClient
 import kotlin.collections.ArrayList
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscriber
 
 
 class MainStoryModel : StoryModel {
@@ -47,23 +44,6 @@ class MainStoryModel : StoryModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()
-
-        /*
-        var x=Observable.fromIterable(kids)
-                .map { kid -> Log.d("Kid",""+kid) }
-                .flatMap <Comment> { itemId ->  storyService.getComments(itemId)}
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {t->
-                            Log.d("Kid2",""+t)
-                        }
-                )
-*/
-
-                //.toList()
-
-
 
     }
 

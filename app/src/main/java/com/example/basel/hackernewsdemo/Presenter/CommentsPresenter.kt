@@ -1,6 +1,5 @@
 package com.example.basel.hackernewsdemo.Presenter
 
-import android.util.Log
 import com.example.basel.hackernewsdemo.Contractor.CommentsView
 import com.example.basel.hackernewsdemo.Contractor.DetailsPresenter
 import com.example.basel.hackernewsdemo.Model.MainStoryModel
@@ -21,8 +20,10 @@ class CommentsPresenter(view : CommentsView) : DetailsPresenter
         comments.subscribe(
                 {
                     comments->
+                    mView.hideLoading()
                     mView.showComments(ArrayList(comments))
                 }
         )
+
     }
 }

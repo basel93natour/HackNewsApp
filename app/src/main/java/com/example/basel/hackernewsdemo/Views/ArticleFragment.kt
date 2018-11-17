@@ -8,15 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebView
 import com.example.basel.hackernewsdemo.Contractor.ArticleView
-import com.example.basel.hackernewsdemo.Contractor.DetailsPresenter
-import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.Presenter.ArticlePresenter
-import com.example.basel.hackernewsdemo.Presenter.StoryDetailsPresenter
 import com.example.basel.hackernewsdemo.R
 import android.webkit.WebViewClient
-import android.webkit.WebChromeClient
 import android.webkit.WebSettings.PluginState
-import android.app.ProgressDialog
 import android.widget.ProgressBar
 
 
@@ -37,8 +32,7 @@ class ArticleFragment (): Fragment(),ArticleView
     override fun initView() {
         article_page=rootView.findViewById(R.id.article_page)
         progressBar=rootView.findViewById(R.id.progressBar)
-
-        //showArticle(story_url)
+        showArticle(story_url)
     }
     override fun showArticle(url: String) {
         ShowLoading()

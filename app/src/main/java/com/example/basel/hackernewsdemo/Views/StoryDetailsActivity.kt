@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager
 import android.util.Log
 import android.widget.TextView
 import com.example.basel.hackernewsdemo.Adapter.StoryDetailsAdapter
+import com.example.basel.hackernewsdemo.Adapter.ViewPagerAdapter
 import com.example.basel.hackernewsdemo.Contractor.DetailsView
 import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.Presenter.StoryDetailsPresenter
@@ -23,8 +24,8 @@ class StoryDetailsActivity : AppCompatActivity(), DetailsView {
     lateinit var preseneter : StoryDetailsPresenter
     internal lateinit var title : TextView
     internal lateinit var url : TextView
-    internal lateinit var date : TextView
-    internal lateinit var author : TextView
+    internal lateinit var date_author : TextView
+
     internal lateinit var storyDetails : Story
     internal lateinit var detailsAdapter: StoryDetailsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +42,11 @@ class StoryDetailsActivity : AppCompatActivity(), DetailsView {
         tabs=findViewById(R.id.tabs_main)
         title=findViewById(R.id.details_title)
         url=findViewById(R.id.details_url)
-        date=findViewById(R.id.details_date)
-        author=findViewById(R.id.details_author)
+        date_author=findViewById(R.id.details_date_author)
 
         title.text=storyDetails.title
         url.text=storyDetails.url
-        date.text=storyDetails.date()
-        author.text=storyDetails.by
+        date_author.text=storyDetails.date()+"-"+storyDetails.by
 
         detailsAdapter=StoryDetailsAdapter(supportFragmentManager)
         setupViewPager(viewPager!!)
@@ -64,7 +63,9 @@ class StoryDetailsActivity : AppCompatActivity(), DetailsView {
         val commentsFragment= CommentsFragment()
         // pass arguments to fragment
         val commentsBundle = Bundle()
-        commentsBundle.putIntegerArrayList("Kids", ArrayList(storyDetails.kids))
+        if (!storyDetails.kids.orEmpty().isEmpty()) {
+            commentsBundle.putIntegerArrayList("Kids", ArrayList(storyDetails.kids))
+        }
         commentsFragment.setArguments(commentsBundle)
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
@@ -73,22 +74,9 @@ class StoryDetailsActivity : AppCompatActivity(), DetailsView {
         viewPager.adapter = detailsAdapter
         tabs.setupWithViewPager(viewPager)
     }
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
-        private val mFragmentList = ArrayList<Fragment>()
-        private val mFragmentTitleList = ArrayList<String>()
 
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
-        override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }

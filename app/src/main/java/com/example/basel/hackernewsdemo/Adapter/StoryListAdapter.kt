@@ -17,7 +17,7 @@ class StoryListAdapter(context: Context, val mData: ArrayList<Story>,var mListen
         val story= mData[position]
         var number=position+1
         holder.number.text =number.toString()
-        holder.points.text =story.score.toString()
+        holder.points.text =story.score.toString()+"P"
         holder.title.text =story.title
         holder.url.text =story.url
         holder.date.text =story.date()+"-"
