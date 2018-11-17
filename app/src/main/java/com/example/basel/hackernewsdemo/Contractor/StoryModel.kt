@@ -4,7 +4,7 @@ import com.example.basel.hackernewsdemo.DataModel.Story
 import com.example.basel.hackernewsdemo.NetworkService.onFinishedListener
 import io.reactivex.Single
 
-interface Model
+interface StoryModel
 {
     fun getStories()
     fun getTopStories() : Single<List<Story>>

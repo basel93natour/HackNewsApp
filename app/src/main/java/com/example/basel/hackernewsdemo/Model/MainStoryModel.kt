@@ -1,25 +1,17 @@
 package com.example.basel.hackernewsdemo.Model
 
-import android.util.Log
-import android.widget.Toast
-import com.example.basel.hackernewsdemo.Contractor.Model
+import com.example.basel.hackernewsdemo.Contractor.StoryModel
 import com.example.basel.hackernewsdemo.DataModel.Story
-import com.example.basel.hackernewsdemo.NetworkService.onFinishedListener
 import com.example.basel.hackernewsdemo.NetworkService.HNService
 import com.example.basel.hackernewsdemo.NetworkService.NetworkClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
 import kotlin.collections.ArrayList
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class MainModel : Model {
+class MainStoryModel : StoryModel {
 
 
     internal  lateinit var storyService : HNService

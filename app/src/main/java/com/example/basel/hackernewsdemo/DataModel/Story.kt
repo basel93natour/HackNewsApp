@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.ocpsoft.prettytime.PrettyTime
 
 @SuppressWarnings("serial") //With this annotation we are going to hide compiler warnings
 class Story() : Comparable <Story>,Serializable {
@@ -34,6 +35,12 @@ class Story() : Comparable <Story>,Serializable {
     @Expose
     var url:String?=null
 
+    fun date() : String
+    {
+        val time = java.util.Date(time!!.toLong() * 1000)
+        val p = PrettyTime()
+        return p.format(time).toString()
+    }
     override fun compareTo(story: Story): Int {
         return story.id!!.compareTo(this.id!!)
     }

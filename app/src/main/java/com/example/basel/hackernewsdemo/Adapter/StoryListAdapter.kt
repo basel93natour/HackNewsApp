@@ -20,14 +20,11 @@ class StoryListAdapter(context: Context, val mData: ArrayList<Story>,var mListen
         holder.points.text =story.score.toString()
         holder.title.text =story.title
         holder.url.text =story.url
-        val time = java.util.Date(story.time!!.toLong() * 1000)
-        val p = PrettyTime()
-        holder.date.text =p.format(time).toString()+"-"
+        holder.date.text =story.date()+"-"
         holder.author.text =story.by
         holder.comments_number.text=story.descendants.toString()
         holder.itemView.setOnClickListener { mListener.onItemClick(story) }
     }
-
 
     override fun getItemCount(): Int {
         return mData.size

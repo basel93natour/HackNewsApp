@@ -1,18 +1,18 @@
-package com.example.basel.hackernewsdemo.MainPresenter
+package com.example.basel.hackernewsdemo.Presenter
 
-import com.example.basel.hackernewsdemo.Contractor.Presenter
-import com.example.basel.hackernewsdemo.Contractor.View
+import com.example.basel.hackernewsdemo.Contractor.StoryPresenter
+import com.example.basel.hackernewsdemo.Contractor.StoryView
 import com.example.basel.hackernewsdemo.DataModel.Story
-import com.example.basel.hackernewsdemo.Model.MainModel
+import com.example.basel.hackernewsdemo.Model.MainStoryModel
 
-class MainPresenter (view : View?): Presenter {
+class MainStoryPresenter (storyView : StoryView?): StoryPresenter {
 
-    internal var mView =view
-    internal lateinit var model: MainModel
+    internal var mView =storyView
+    internal lateinit var model: MainStoryModel
     internal lateinit var Topstories : ArrayList<Story>
     fun intiPresenter()
     {
-        model= MainModel()
+        model= MainStoryModel()
         mView!!.intiView()
 
     }
